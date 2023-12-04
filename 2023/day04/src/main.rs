@@ -1,7 +1,7 @@
 use std::collections::{HashMap, HashSet};
 
 fn main() {
-    let input = std::fs::read_to_string("in.txt").unwrap();
+    let input = include_str!("../in.txt");
     doit(&input);
 }
 
@@ -22,13 +22,9 @@ fn doit(input: &str) {
         let winners = parse(winners);
 
         let count = numbers.intersection(&winners).count() as u32;
-        let score = match count {
-            0 => 0,
-            1 => 1,
-            2 => 2,
-            _ => 2_i64.pow(count - 1),
+        if count > 0 {
+            res1 += 2_i64.pow(count - 1)
         };
-        res1 += score;
 
         let card_no = (card_no + 1) as u32;
         let current_cards = won_cards.get(&card_no).unwrap_or(&0) + 1;
