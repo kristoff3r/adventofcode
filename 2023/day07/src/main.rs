@@ -5,6 +5,7 @@ fn main() {
     // let input = include_str!("../example.txt");
 
     let mut hands = input
+        .trim_end()
         .lines()
         .map(|l| l.split_once(" ").unwrap())
         .map(|(hand, bid)| (hand.parse::<Hand>().unwrap(), bid.parse::<i64>().unwrap()))
@@ -50,22 +51,25 @@ impl Hand {
             *handset.entry(c).or_default() += 1;
         }
 
+        let joker_count = handset.remove(&Card::J).unwrap_or(0);
+
         let mut sorted = handset.values().copied().collect::<Vec<_>>();
         sorted.sort();
+        let max = sorted.iter().max().copied().unwrap_or(0);
 
-        if &sorted == &[5] {
+        if max + joker_count == 5 {
             return HandType::FiveKind;
         }
 
-        if &sorted == &[1, 4] {
+        if max + joker_count == 4 {
             return HandType::FourKind;
         }
 
-        if sorted == &[2, 3] {
+        if sorted == &[2, 3] || sorted == &[2, 2] {
             return HandType::FullHouse;
         }
 
-        if sorted == &[1, 1, 3] {
+        if max + joker_count == 3 {
             return HandType::ThreeKind;
         }
 
@@ -73,9 +77,11 @@ impl Hand {
             return HandType::TwoPair;
         }
 
-        if sorted == &[1, 1, 1, 2] {
+        if sorted == &[1, 1, 1, 2] || sorted == &[1, 1, 1, 1] {
             return HandType::OnePair;
         }
+
+        assert_eq!(joker_count, 0);
 
         HandType::HighCard
     }
@@ -94,9 +100,9 @@ enum HandType {
 
 #[derive(Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 enum Card {
+    J,
     C(u8),
     T,
-    J,
     Q,
     K,
     A,
