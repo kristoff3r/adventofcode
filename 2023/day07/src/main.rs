@@ -1,15 +1,16 @@
-use std::{cmp::Ordering, collections::HashMap};
+use std::{cmp::Ordering, collections::HashMap, str::FromStr};
 
 fn main() {
     let input = include_str!("../in.txt");
+    // let input = include_str!("../example.txt");
 
     let mut hands = input
         .lines()
         .map(|l| l.split_once(" ").unwrap())
-        .map(|(hand, bid)| (parse_hand(hand), bid.parse::<i64>().unwrap()))
+        .map(|(hand, bid)| (hand.parse::<Hand>().unwrap(), bid.parse::<i64>().unwrap()))
         .collect::<Vec<_>>();
 
-    hands.sort_by(|a, b| a.0.cmp(&b.0));
+    hands.sort_by(|a, b| a.0.partial_cmp(&b.0).unwrap());
     let mut res = 0;
     for (i, (hand, bid)) in hands.iter().enumerate() {
         let rank = i + 1;
@@ -19,21 +20,27 @@ fn main() {
     println!("{res}");
 }
 
-fn parse_hand(s: &str) -> Vec<Card> {
-    s.chars()
-        .map(|c| match c {
-            '2'..='9' => Card::C(c as u8 - '0' as u8),
-            'T' => Card::T,
-            'J' => Card::J,
-            'Q' => Card::Q,
-            'K' => Card::K,
-            'A' => Card::A,
-            _ => panic!(),
-        })
-        .collect()
+impl FromStr for Hand {
+    type Err = ();
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Ok(Hand(
+            s.chars()
+                .map(|c| match c {
+                    '2'..='9' => Card::C(c as u8 - '0' as u8),
+                    'T' => Card::T,
+                    'J' => Card::J,
+                    'Q' => Card::Q,
+                    'K' => Card::K,
+                    'A' => Card::A,
+                    _ => panic!(),
+                })
+                .collect::<Vec<_>>(),
+        ))
+    }
 }
 
-#[derive(PartialEq)]
+#[derive(PartialEq, Debug)]
 struct Hand(Vec<Card>);
 
 impl Hand {
