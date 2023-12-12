@@ -80,7 +80,7 @@ fn main() {
 fn part1(maps: &[Vec<Mapping>], mut seeds: Vec<i64>) -> Vec<i64> {
     for m in maps {
         for s in seeds.iter_mut() {
-            for cur @ &Mapping { source, dest, len } in m {
+            for &Mapping { source, dest, len } in m {
                 if source <= *s && *s < source + len {
                     // println!("{s} -> {} because {cur:?}", *s - source + dest);
                     *s = *s - source + dest;
@@ -93,6 +93,7 @@ fn part1(maps: &[Vec<Mapping>], mut seeds: Vec<i64>) -> Vec<i64> {
     seeds
 }
 
+#[allow(dead_code)]
 fn part2(maps: &[Vec<Mapping>], seeds: Vec<i64>) -> Vec<i64> {
     let mut seed_ranges = seeds
         .windows(2)
