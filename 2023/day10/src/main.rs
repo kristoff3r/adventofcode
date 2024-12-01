@@ -3,7 +3,7 @@ use std::collections::{hash_map::Entry, HashMap};
 type Pos = (i32, i32);
 
 fn main() {
-    let input = include_str!("../in.txt").as_bytes();
+    let input = std::fs::read("in.txt").unwrap();
     // let input = include_str!("../example1.txt").as_bytes();
 
     let grid: Vec<_> = input

@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 fn main() {
-    let input = include_str!("../in.txt");
+    let input = std::fs::read_to_string("in.txt").unwrap();
 
     let mut lines = input.lines();
     let directions = lines.next().unwrap();

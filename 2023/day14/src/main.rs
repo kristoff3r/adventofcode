@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 fn main() {
-    let input = include_str!("../in.txt").as_bytes();
+    let input = std::fs::read("in.txt").unwrap();
     // let input = include_str!("../example.txt").as_bytes();
 
     let mut grid: Vec<_> = input

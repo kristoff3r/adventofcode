@@ -1,7 +1,7 @@
 use std::convert::identity;
 
 fn main() {
-    let input = include_bytes!("../in.txt");
+    let input = std::fs::read("in.txt").unwrap();
     // let input = include_bytes!("../example.txt");
 
     let grid: Vec<_> = input

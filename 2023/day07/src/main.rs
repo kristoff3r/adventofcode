@@ -1,7 +1,7 @@
 use std::{cmp::Ordering, collections::HashMap, str::FromStr};
 
 fn main() {
-    let input = include_str!("../in.txt");
+    let input = std::fs::read_to_string("in.txt").unwrap();
     // let input = include_str!("../example.txt");
 
     let mut hands = input

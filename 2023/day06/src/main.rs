@@ -1,5 +1,5 @@
 fn main() {
-    let input = include_str!("../in.txt");
+    let input = std::fs::read_to_string("in.txt").unwrap();
 
     let times = input
         .lines()
