@@ -27,7 +27,7 @@ fn main() {
             continue;
         }
 
-        println!("failed {res}: {values:?}");
+        // println!("failed {res}: {values:?}");
     }
 
     println!("{res1}");
@@ -74,7 +74,7 @@ fn solve(res: i64, values: &[i64], operators: &[fn(i64, i64) -> i64]) -> bool {
                     queue.push((idx + 1, new_res, ops));
                 }
                 Ordering::Equal => {
-                    println!("found {ops} == {res}");
+                    // println!("found {ops} == {res}");
                     return true;
                 }
                 _ => {

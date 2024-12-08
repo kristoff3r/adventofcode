@@ -92,6 +92,9 @@ dependencies = [
 [[package]]
 name = "day06"
 version = "0.1.0"
+dependencies = [
+ "util",
+]
 
 [[package]]
 name = "day06-2023"
@@ -104,6 +107,13 @@ version = "0.1.0"
 [[package]]
 name = "day07-2023"
 version = "0.1.0"
+
+[[package]]
+name = "day08"
+version = "0.1.0"
+dependencies = [
+ "util",
+]
 
 [[package]]
 name = "day08-2023"
@@ -145,6 +155,12 @@ name = "fixedbitset"
 version = "0.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0ce7134b9999ecaf8bcd65542e436736ef32ddca1b3e06094cb6ec5755203b80"
+
+[[package]]
+name = "glam"
+version = "0.29.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "dc46dd3ec48fdd8e693a98d2b8bafae273a2d54c1de02a2a7e3d57d501f39677"
 
 [[package]]
 name = "hashbrown"
@@ -282,3 +298,10 @@ name = "scopeguard"
 version = "1.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "94143f37725109f92c262ed2cf5e59bce7498c01bcc1502d7b9afe439a4e9f49"
+
+[[package]]
+name = "util"
+version = "0.1.0"
+dependencies = [
+ "glam",
+]
