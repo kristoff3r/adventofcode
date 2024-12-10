@@ -26,7 +26,7 @@ impl<const M: usize, const N: usize> Grid<M, N> {
 
         for i in 0..M {
             for j in 0..N {
-                assert!(grid[j][i] != 0, "{i},{j}");
+                assert!(grid[i][j] != 0, "{i},{j}");
             }
         }
 
@@ -57,8 +57,8 @@ impl<const M: usize, const N: usize> Grid<M, N> {
 
     pub fn get(&self, pos: IVec2) -> Option<u8> {
         self.grid
-            .get(pos.y as usize)
-            .and_then(|row| row.get(pos.x as usize))
+            .get(pos.x as usize)
+            .and_then(|row| row.get(pos.y as usize))
             .cloned()
     }
 
@@ -73,6 +73,17 @@ impl<const M: usize, const N: usize> Grid<M, N> {
                     .map(move |(j, c)| (ivec2(i as i32, j as i32), c))
             })
             .flatten()
+    }
+
+    pub fn neighbors(&self, pos: IVec2) -> impl Iterator<Item = (IVec2, u8)> + use<'_, M, N> {
+        [
+            pos + Direction::North.step(),
+            pos + Direction::East.step(),
+            pos + Direction::South.step(),
+            pos + Direction::West.step(),
+        ]
+        .into_iter()
+        .filter_map(|pos| self.get(pos).map(|v| (pos, v)))
     }
 }
 
