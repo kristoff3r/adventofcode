@@ -1,11 +1,17 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     rust-overlay.url = "github:oxalica/rust-overlay";
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, rust-overlay, ... }:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      rust-overlay,
+      ...
+    }:
     let
       system = "x86_64-linux";
       overlays = [ (import rust-overlay) ];
@@ -43,7 +49,7 @@
           udev
           alsa-lib
           vulkan-loader
-          pkgconfig
+          pkg-config
           vulkan-tools
           shaderc
           renderdoc
@@ -56,11 +62,13 @@
         ];
 
         VK_LAYER_PATH = "${pkgs.vulkan-validation-layers}/share/vulkan/explicit_layer.d";
-        LD_LIBRARY_PATH = with pkgs; lib.makeLibraryPath [
-          udev
-          alsa-lib
-          vulkan-loader
-        ];
+        LD_LIBRARY_PATH =
+          with pkgs;
+          lib.makeLibraryPath [
+            udev
+            alsa-lib
+            vulkan-loader
+          ];
       };
     };
 }

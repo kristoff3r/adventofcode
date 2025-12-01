@@ -1,4 +1,4 @@
-use std::{collections::HashMap, fmt::format};
+use std::collections::HashMap;
 
 fn main() {
     let input = std::fs::read_to_string("in.txt").unwrap();
