@@ -37,7 +37,7 @@ fn is_valid2(id: i64) -> bool {
     let bytes = id.to_string().bytes().collect::<Vec<_>>();
     for n in 1..=bytes.len() / 2 {
         let mut iter = bytes[n..].chunks_exact(n);
-        if iter.all(|c| c == &bytes[..n]) && iter.remainder().is_empty() {
+        if iter.remainder().is_empty() && iter.all(|c| c == &bytes[..n]) {
             // println!("{id} invalid");
             return false;
         }
