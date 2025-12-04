@@ -62,7 +62,7 @@ impl<const M: usize, const N: usize> Grid<M, N> {
             .cloned()
     }
 
-    pub fn iter_all(&self) -> impl Iterator<Item = (IVec2, u8)> + use<'_, M, N> {
+    pub fn iter_all(&self) -> impl Iterator<Item = (IVec2, u8)> + Clone + use<'_, M, N> {
         self.grid
             .iter()
             .enumerate()
@@ -80,6 +80,21 @@ impl<const M: usize, const N: usize> Grid<M, N> {
             pos + Direction::North.step(),
             pos + Direction::East.step(),
             pos + Direction::South.step(),
+            pos + Direction::West.step(),
+        ]
+        .into_iter()
+        .filter_map(|pos| self.get(pos).map(|v| (pos, v)))
+    }
+
+    pub fn neighbors_8(&self, pos: IVec2) -> impl Iterator<Item = (IVec2, u8)> + use<'_, M, N> {
+        [
+            pos + Direction::North.step(),
+            pos + Direction::North.step() + Direction::East.step(),
+            pos + Direction::North.step() + Direction::West.step(),
+            pos + Direction::South.step(),
+            pos + Direction::South.step() + Direction::East.step(),
+            pos + Direction::South.step() + Direction::West.step(),
+            pos + Direction::East.step(),
             pos + Direction::West.step(),
         ]
         .into_iter()
