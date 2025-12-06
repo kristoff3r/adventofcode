@@ -29,6 +29,8 @@ fn main() {
     }
     merged_ranges.push(cur_range);
 
+    println!("{}", merged_ranges.len());
+
     let mut res1 = 0;
     for id in iter.next().unwrap().lines() {
         let id = id.parse::<i64>().unwrap();
