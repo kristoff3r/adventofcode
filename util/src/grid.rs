@@ -3,7 +3,7 @@ use std::ops::{Index, IndexMut};
 use glam::{ivec2, IVec2};
 
 pub struct Grid<const M: usize, const N: usize> {
-    pub grid: [[u8; M]; N],
+    pub grid: [[u8; N]; M],
 }
 
 impl<const M: usize, const N: usize> Grid<M, N> {
@@ -17,7 +17,7 @@ impl<const M: usize, const N: usize> Grid<M, N> {
             "Invalid dimensions, try {cols}x{rows}"
         );
 
-        let mut grid = [[0; M]; N];
+        let mut grid = [[0; N]; M];
         for (i, row) in data.split(|&b| b == b'\n').enumerate() {
             for (j, &cell) in row.iter().enumerate() {
                 grid[i][j] = cell;
@@ -52,13 +52,13 @@ impl<const M: usize, const N: usize> Grid<M, N> {
     }
 
     pub fn in_bounds(&self, pos: IVec2) -> bool {
-        0 <= pos.x && pos.x < M as i32 && 0 <= pos.y && pos.y < N as i32
+        0 <= pos.x && pos.x < N as i32 && 0 <= pos.y && pos.y < M as i32
     }
 
     pub fn get(&self, pos: IVec2) -> Option<u8> {
         self.grid
-            .get(pos.x as usize)
-            .and_then(|row| row.get(pos.y as usize))
+            .get(pos.y as usize)
+            .and_then(|row| row.get(pos.x as usize))
             .cloned()
     }
 
@@ -106,13 +106,13 @@ impl<const M: usize, const N: usize> Index<IVec2> for Grid<M, N> {
     type Output = u8;
 
     fn index(&self, p: IVec2) -> &u8 {
-        &self.grid[p.x as usize][p.y as usize]
+        &self.grid[p.y as usize][p.x as usize]
     }
 }
 
 impl<const M: usize, const N: usize> IndexMut<IVec2> for Grid<M, N> {
     fn index_mut(&mut self, p: IVec2) -> &mut u8 {
-        &mut self.grid[p.x as usize][p.y as usize]
+        &mut self.grid[p.y as usize][p.x as usize]
     }
 }
 
